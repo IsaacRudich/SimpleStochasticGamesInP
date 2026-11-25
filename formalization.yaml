@@ -124,7 +124,7 @@ fidelity:
     two terminals may be at any position.
 
 review:
-  status: "unchecked"
+  status: "author-verified"
   reviewers: []
   notes: >-
     No review beyond the authors' own is recorded here. One author read and accepted the definitions and
