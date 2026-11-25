@@ -1,0 +1,156 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4.
+version: "v0.4"
+
+project:
+  name: "simple stochastic games in P"
+  description: >-
+    A Lean 4 proof that simple stochastic games, restricted to stopping games, are solved in polynomial time
+    by a Turing machine. The polynomial-time solvability of simple stochastic games is already stated in OpenAI's
+    preprint "Strongly polynomial linear programming" (24 November 2026), as a consequence of its theorem on
+    mean-payoff games; the Lean library accompanying the preprint formalizes its linear programming results but
+    not its results on games. Here the part of that Lean library containing the search algorithm ("extremal
+    prices") is ported and used as a black box, and applied directly to the value operator of a stopping game.
+    Three theorems are advertised. (1) The decision problem "can the max player guarantee that the token
+    arrives at terminal-1 with probability at least 1/2" is in P. (2) The strict variant, "with probability
+    greater than 1/2", is in P. (3) The values of all nodes, together with optimal strategies of both players,
+    are computable in polynomial time. Polynomial time is Mathlib's Turing.TM2ComputableInPolyTime with every
+    stack alphabet finite, for an explicit encoding of a game on n nodes by 10 n^2 bits. A game that is not
+    well formed or not a stopping game is a no-instance of (1) and (2), and gets the empty output in (3).
+    Seven further compared theorems are sanity checks on the input encoding and on the output word.
+  authors:
+    - "Avi Rudich"
+    - "Isaac Rudich"
+    - "Rachel Rue"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Avi Rudich"
+    - "Isaac Rudich"
+    - "Rachel Rue"
+
+classification:
+  arxiv: ["cs.CC", "cs.GT"]
+  msc2020: ["68Q25", "91A15", "68Q15", "91A05", "90C05", "68V20"]
+
+sources:
+  - title: "Strongly polynomial linear programming"
+    authors:
+      - "OpenAI"
+    type: "paper"
+    id: "OAI:Strongly-polynomial-linear-programming-November-24-2026"
+    location: "https://github.com/openai/math/blob/3344da59991ed94f9ba711217b29c1d760badfa6/preprints/Strongly-polynomial-linear-programming-November-24-2026/paper.pdf"
+    relationship: "adapts"
+    note: >-
+      Preprint dated 24 November 2026. It states polynomial time for simple stochastic games in its introduction
+      and in its section "Games on graphs" ("Theorem [Values and optimal policies] therefore gives a
+      polynomial-time algorithm for simple stochastic games"), for general games and by way of mean-payoff games.
+      Adapted here: the result is restricted to stopping games, and proved by applying the search algorithm
+      directly to the value operator, without mean-payoff games and without linear programming. The Lean machine
+      library that accompanies the preprint (openai/math, lean/ directory) is ported for the search. The Lean
+      statements about simple stochastic games, the game theory, the reduction to the search, and the Turing
+      machine statements are in this repository.
+    license: "Apache-2.0 (LICENSE files of the openai/math repository, at its root and under lean/)"
+  - title: "Simple Stochastic Stopping Games: A Generator and Benchmark Library"
+    authors:
+      - "Avi Rudich"
+      - "Isaac Rudich"
+      - "Rachel Rue"
+    type: "paper"
+    id: "arXiv:2402.02571"
+    relationship: "background"
+    author_endorsement: "participated"
+    note: "Terminology and the form of the decision problem (its Section 1.1) used in Challenge.lean."
+  - title: "The complexity of stochastic games"
+    authors:
+      - "Anne Condon"
+    type: "paper"
+    id: "Information and Computation 96(2):203-224, 1992"
+    relationship: "background"
+    note: "Origin of simple stochastic games and of the question with 'greater than 1/2' (the second theorem)."
+
+related_formalizations:
+  - id: "https://github.com/openai/math/tree/3344da59991ed94f9ba711217b29c1d760badfa6"
+    relationship: "builds-on"
+    note: >-
+      398 files under OAI/ come from the lean/ directory of that repository (written for Lean 4.34.1), ported to
+      Lean 4.35.0 / Mathlib v4.35.0 with the module system. They were compared with commit
+      3344da59991ed94f9ba711217b29c1d760badfa6. Modifications are listed in PORTED_FILES.md.
+
+status:
+  scope: >-
+    Stopping games only: a game that is not well formed (exactly one terminal-0 node, exactly one terminal-1
+    node, terminals with self-arcs) or not a stopping game is a no-instance of the two decision problems and
+    gets the empty output word in the values theorem; there is no statement about non-stopping games.
+    Strategies are positional (one arc per node). Three results: yes/no for "at least 1/2", yes/no for
+    "greater than 1/2", and exact values of all nodes with optimal strategies of both players. The machine
+    model is Mathlib's TM2 (multi-stack Turing machine) with finite alphabets, the input is a fixed encoding
+    with 10 n^2 bits, and the bound is a polynomial in the input length that is not made explicit in the
+    statements. The search engine of the OpenAI preprint is used as a black box: this is not a new algorithm
+    for these games, and it is not a practical solver (the proved polynomial bound has a very large degree).
+    The Lean statements of the OpenAI library about linear programming are not reproduced here. No claim about
+    novelty or priority is made in this file.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude (versions not tracked)"]
+      framework: "Claude Code"
+      tool_setup: >-
+        AI agents (Anthropic's Claude) wrote the Lean proofs and ported the OpenAI library, under the direction
+        of a human author who read and accepted the definitions and statements of Challenge.lean.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "not tracked"
+      prompting_notes: "not tracked"
+  spend_usd: "not tracked"
+  notes: >-
+    The definitions and the theorem statements in Challenge.lean were read and accepted by a human author.
+    All proofs were written by AI agents and are checked by Lean's kernel.
+
+fidelity:
+  divergences: >-
+    With respect to the OpenAI preprint: it states polynomial time for general simple stochastic games, as a
+    consequence of its theorem on mean-payoff games; here the statement is for stopping games only, and the proof
+    does not go through mean-payoff games or linear programming. Its Lean library has no theorem on simple
+    stochastic games; its search machine is used unchanged through its Lean interface, and only the part of the
+    library that this needs is ported. With respect to arXiv:2402.02571 and Condon's paper: only stopping games are treated;
+    well-formedness and the stopping property are part of being a yes-instance; strategies are positional;
+    "arrives with probability at least c" is expressed with the probabilities of arrival within T steps
+    (for every eps > 0 some T reaches c - eps) rather than with a limit; nodes are numbered from 0 and the
+    two terminals may be at any position.
+
+review:
+  status: "unchecked"
+  reviewers: []
+  notes: >-
+    No review beyond the authors' own is recorded here. One author read and accepted the definitions and
+    statements of Challenge.lean. The proofs are checked by Lean's kernel.
+
+alignment:
+  namespace: "SSG"
+  statements:
+    - source: "arXiv:2402.02571, Section 1.1: the decision problem (arrival at terminal-1 with probability at least 1/2)"
+      lean: "SSG.ssg_in_P"
+      module: "Challenge"
+      status: "proved"
+      note: "For stopping games; polynomial time on a Mathlib Turing machine."
+    - source: "Condon 1992: the simple stochastic game problem (probability greater than 1/2)"
+      lean: "SSG.ssgStrict_in_P"
+      module: "Challenge"
+      status: "proved"
+      note: "For stopping games; polynomial time on a Mathlib Turing machine."
+    - source: "Values of all nodes and optimal strategies of a stopping game"
+      lean: "SSG.ssg_values_in_P"
+      module: "Challenge"
+      status: "proved"
+      note: >-
+        Output: each value as a fraction in lowest terms, then one bit per node for each player's strategy.
+        The other seven compared theorems (SSG.encode_length, SSG.encode_injective, SSG.encodeSolution_length,
+        SSG.isSolution_value_unique, SSG.isSolution_value_bits, SSG.encodeSolution_injective,
+        SSG.ssgDecision_iff_value) are sanity checks on the encodings.
+
+acknowledgements: "Mathlib; the openai/math Lean library (Apache-2.0); the Palomar template."

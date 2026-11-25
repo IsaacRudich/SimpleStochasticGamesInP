@@ -1,0 +1,18 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "SSG.ssg_in_P",
+    "SSG.ssgStrict_in_P",
+    "SSG.encode_length",
+    "SSG.encode_injective",
+    "SSG.ssg_values_in_P",
+    "SSG.encodeSolution_length",
+    "SSG.isSolution_value_unique",
+    "SSG.isSolution_value_bits",
+    "SSG.encodeSolution_injective",
+    "SSG.ssgDecision_iff_value"
+  ],
+  "definition_names": [],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"]
+}

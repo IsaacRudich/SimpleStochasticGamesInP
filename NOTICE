@@ -1,0 +1,14 @@
+simple stochastic games in P
+
+This product includes software developed by OpenAI.
+
+The files under OAI/ (except OAI/PortCompat.lean) are taken from the lean/ directory of the
+openai/math repository (https://github.com/openai/math), licensed under the Apache License,
+Version 2.0 (see LICENSE). Original authors: OpenAI. They have been modified: ported from
+Lean 4.34.1 to Lean 4.35.0 / Mathlib v4.35.0 and converted to Lean's module system. The
+modifications are listed in PORTED_FILES.md, and each such file starts with an attribution comment.
+
+The scripts scripts/check-lean-sources.py, scripts/validate-formalization.rb,
+scripts/verify-comparator.sh, test/validate_formalization_test.rb, the CI workflow and the
+docbuild/ project are taken from the PalomarRegistry/PalomarTemplate repository
+(https://github.com/PalomarRegistry/PalomarTemplate, Apache License 2.0), with small changes.
