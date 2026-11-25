@@ -86,7 +86,7 @@ jobs:
         run: python3 scripts/check-lean-sources.py
       - name: Check that SSGinP/Defs.lean is the verbatim copy of the Challenge definitions
         run: python3 scripts/check_defs_sync.py
-      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+      - uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee
         with:
           build: true
       - name: Print the axioms of the advertised theorems
@@ -102,7 +102,7 @@ jobs:
           persist-credentials: false
       - name: Check Lean source requirements before builds
         run: python3 scripts/check-lean-sources.py
-      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+      - uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee
         with:
           build: false
       - name: Build doc-gen4 output
@@ -128,7 +128,7 @@ jobs:
           persist-credentials: false
       - name: Check Lean source requirements before builds
         run: python3 scripts/check-lean-sources.py
-      - uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+      - uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee
         with:
           build: false
       - name: Install bubblewrap for lake comparator's sandbox
